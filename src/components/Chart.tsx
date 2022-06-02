@@ -3,12 +3,17 @@ import * as d3 from "d3";
 
 import { PriceData } from "../context/PriceDataContext";
 import Candle from "./Candle";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface Props {
   data: PriceData["data"];
 }
 
 const Chart: FunctionComponent<Props> = (props) => {
+  const direction = useSelector(
+    (state: RootState) => state.musicVariables.direction
+  );
   const chartWidth = window.window.innerWidth;
   const chartHeight = window.window.innerHeight;
 
@@ -32,11 +37,29 @@ const Chart: FunctionComponent<Props> = (props) => {
     );
   };
 
+  const getBackgroundColor = () => {
+    if (direction === -1) {
+      return "#121430";
+    }
+    if (direction === 1) {
+      return "#2b3069";
+    }
+    return "#1f234b";
+  };
+
   // calculate the candle width
   const candleWidth = Math.floor((chartWidth / dataAsFloat.length) * 0.8);
 
   return (
-    <svg width={chartWidth} height={chartHeight} className="chart">
+    <svg
+      width={chartWidth}
+      height={chartHeight}
+      className="chart"
+      style={{
+        backgroundColor: getBackgroundColor(),
+        transition: 'background 6s ease-in-out',
+      }}
+    >
       {dataAsFloat.map((bar, i) => {
         const xPosition = (chartWidth / (dataAsFloat.length + 1)) * (i + 1);
         const previousBar = dataAsFloat[i - 1];

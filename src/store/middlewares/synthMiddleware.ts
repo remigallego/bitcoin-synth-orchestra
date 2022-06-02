@@ -6,9 +6,9 @@ import { pad } from "../../instruments/Pad";
 import Pluck, { pluck } from "../../instruments/Pluck";
 import { snareDrum } from "../../instruments/Snare";
 import { synthLead } from "../../instruments/SynthLead";
-import { hatDrum } from "../../synth";
 import { actions } from "../chartData";
 import { actions as musVarActions } from "../musicVariables";
+import { hatDrum } from "../../instruments/Hat";
 
 const calculatePercentage = (last: string, first: string) => {
   if (!last || !first) return false;

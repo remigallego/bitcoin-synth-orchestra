@@ -14,40 +14,58 @@ const PriceAwareComponents: FunctionComponent<Props> = (props) => {
 
   const latestPrice =
     priceData?.data.length > 0
-      ? priceData.data[priceData.data.length - 1]
+      ? priceData.data[priceData.data.length - 1].priceAsFloat
       : null;
+
+  const priceBeforeLatest =
+    priceData?.data.length > 1
+      ? priceData.data[priceData.data.length - 2].priceAsFloat
+      : null;
+
+  const getColor = () => {
+    if (!latestPrice || !priceBeforeLatest) {
+      return "white";
+    }
+    if (latestPrice - priceBeforeLatest > 0) {
+      return "#00FF00";
+    } else if (latestPrice - priceBeforeLatest < 0) {
+      return "#FF0000";
+    } else {
+      return "white";
+    }
+  };
 
   return (
     <>
       <h1
         style={{
           position: "absolute",
-          opacity: 0.4,
-          color: latestPrice?.price === "Buy" ? "white" : "white",
+          opacity: 0.5,
+          color: getColor(),
         }}
       >
-        {latestPrice?.price}
+        {latestPrice}
       </h1>
       <Chart data={priceData.data} />
       <Synth data={priceData.data} />
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          backgroundColor: "white",
-        }}
-      >
-        <p style={{ fontSize: 15, color: "black", margin: 0 }}>
-          Direction: {musicVars.direction.toString()}
-        </p>
-        <button onClick={() => dispatch(actions.setPriceOffsetUp())}>
-          Make price go UP
-        </button>{" "}
-        <button onClick={() => dispatch(actions.setPriceOffsetDown())}>
-          Make price go DOWN
-        </button>
-      </div>
+      {/*    <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            backgroundColor: "white",
+          }}
+        >
+          <p style={{ fontSize: 15, color: "black", margin: 0 }}>
+            Direction: {musicVars.direction.toString()}
+          </p>
+          <button onClick={() => dispatch(actions.setPriceOffsetUp())}>
+            Make price go UP
+          </button>{" "}
+          <button onClick={() => dispatch(actions.setPriceOffsetDown())}>
+            Make price go DOWN
+          </button>
+        </div> */}
     </>
   );
 };

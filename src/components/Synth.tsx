@@ -1,13 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { PriceData } from "../context/PriceDataContext";
 import * as Tone from "tone";
-import { neutralPattern, regenerateNeutralPattern } from "../synth";
 
 import Loop from "../instruments/Loop";
 interface Props {
   data: PriceData["data"];
 }
-// Tone.Transport.bpm.value = 150;
+export const DEFAULT_BPM = 140;
 
 const Synth: FunctionComponent<Props> = (props) => {
   return (
@@ -20,6 +19,10 @@ const Synth: FunctionComponent<Props> = (props) => {
       <button
         onClick={() => {
           Tone.start();
+
+          Tone.Destination.volume.value = -14;
+          Tone.Transport.bpm.value = DEFAULT_BPM;
+
           if (Tone.Transport.state !== "started") {
             Tone.Transport.start();
             Loop.startLoop();
@@ -29,15 +32,6 @@ const Synth: FunctionComponent<Props> = (props) => {
         }}
       >
         Start
-      </button>
-
-      <button
-        onClick={() => {
-          regenerateNeutralPattern();
-          neutralPattern.start(0);
-        }}
-      >
-        Regenerate neutral
       </button>
     </div>
   );

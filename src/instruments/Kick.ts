@@ -20,7 +20,7 @@ export const KICKPATTERNS = {
   dubstep: [{ time: "0:0:0" }, { time: "0:1:2" }],
 };
 
-let kickDrum = new Tone.MembraneSynth({ volume: 15 }).toDestination();
+let kickDrum = new Tone.MembraneSynth({ volume: 8 }).toDestination();
 let currentPart: Tone.Part;
 
 const play = (measures: number) => {

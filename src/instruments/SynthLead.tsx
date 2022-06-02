@@ -1,12 +1,8 @@
 import * as Tone from "tone";
 import { store } from "../store";
 
-export const DEFAULT_BPM = 140;
-
-Tone.Transport.bpm.value = DEFAULT_BPM;
-
 export const synthLead = new Tone.PolySynth({
-  volume: 0,
+  volume: -3,
 });
 
 const reverb = new Tone.Reverb({
@@ -56,7 +52,7 @@ const generateNeutralNotes = () => {
     .map((e) => {
       const velocity = ["0:0:0", "0:1:0", "0:2:0", "0:3:0"].includes(e.time)
         ? 0.1
-        : randomBetween(0.7, 1);
+        : randomBetween(0.7, 0.9);
       return {
         time: e.time,
         note: notes[randomBetween(0, notes.length - 1)],
@@ -87,12 +83,29 @@ const happyNotesWithTime = [
 let currentPart: Tone.Part;
 
 const play = (measures: number) => {
-  currentPart = new Tone.Part(function (time, note) {
-    synthLead.triggerAttackRelease(note.note, "32n", time, note.velocity);
-  }, generateNeutralNotes());
-  currentPart.loop = measures;
-  currentPart.loopEnd = "1:0";
-  currentPart.start();
+  const randomNumber = randomBetween(0, 3);
+  if (randomNumber === 3) {
+    console.log("play 2 synth patterns");
+    let partOne = new Tone.Part(function (time, note) {
+      synthLead.triggerAttackRelease(note.note, "32n", time, note.velocity);
+    }, generateNeutralNotes());
+    partOne.loop = measures / 2;
+    partOne.loopEnd = "1:0";
+    partOne.start();
+    let partTwo = new Tone.Part(function (time, note) {
+      synthLead.triggerAttackRelease(note.note, "32n", time, note.velocity);
+    }, generateNeutralNotes());
+    partTwo.loop = measures / 2;
+    partTwo.loopEnd = "1:0";
+    partTwo.start("+4m");
+  } else {
+    currentPart = new Tone.Part(function (time, note) {
+      synthLead.triggerAttackRelease(note.note, "32n", time, note.velocity);
+    }, generateNeutralNotes());
+    currentPart.loop = measures;
+    currentPart.loopEnd = "1:0";
+    currentPart.start();
+  }
 };
 
 const SynthLead = { play };

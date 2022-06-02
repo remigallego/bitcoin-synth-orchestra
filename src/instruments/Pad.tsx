@@ -1,10 +1,6 @@
 import * as Tone from "tone";
 import { store } from "../store";
 
-export const DEFAULT_BPM = 140;
-
-Tone.Transport.bpm.value = DEFAULT_BPM;
-
 export const pad = new Tone.DuoSynth({
   voice0: {
     envelope: {

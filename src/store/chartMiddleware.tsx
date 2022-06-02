@@ -3,14 +3,8 @@ import { RootState } from ".";
 import { actions, PriceData } from "./chartData";
 import { actions as musVarActions } from "./musicVariables";
 import * as _ from "lodash";
-import { synthLead } from "../instruments/SynthLead";
-import { pad } from "../instruments/Pad";
-import { hatDrum } from "../instruments/Hat";
-import { snareDrum } from "../instruments/Snare";
-import { bassFilter } from "../instruments/Bass";
-import Pluck from "../instruments/Pluck";
 
-const MAX_LENGTH = 100;
+const MAX_LENGTH = 500;
 
 const URL = "wss://stream.binance.com:9443/ws/btcusdt@aggTrade";
 const client = new WebSocket(URL);
@@ -32,12 +26,6 @@ const formatPrice = (price: string, priceOffset?: number) => {
   return newPrice.toString();
 };
 
-const getAveragePrice = (data: PriceData[]) => {
-  const prices = data.map((item) => item.priceAsFloat);
-  const averagePrice = _.mean(prices);
-  return averagePrice;
-};
-
 const chartMiddleware: Middleware<{}, RootState> =
   (store) => (next) => (action) => {
     if (!actions.startConnecting.match(action)) {
@@ -46,22 +34,11 @@ const chartMiddleware: Middleware<{}, RootState> =
 
     let buffer: PriceData[] = [];
 
-    const calculatePercentage = (last: string, first: string) => {
-      if (!last || !first) return false;
-      const diff = parseFloat(last) - parseFloat(first);
-      const percentage = (diff / parseFloat(first)) * 1000;
-      return percentage;
-    };
-
     const dispatchData = (newData: PriceData[]) => {
       const { data } = store.getState().chartData;
       if (buffer.length > 0) {
         buffer = [];
       }
-      const last = newData[newData.length - 1]?.price;
-      const first = data[0]?.price;
-
-      const perc = calculatePercentage(last, first);
 
       if (data.length >= MAX_LENGTH) {
         store.dispatch(
