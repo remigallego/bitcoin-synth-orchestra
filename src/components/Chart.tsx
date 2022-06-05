@@ -58,7 +58,6 @@ const Chart: FunctionComponent<Props> = (props) => {
       className="chart"
       style={{
         position: "absolute",
-        backgroundColor: "black",
         transition: "background 6s ease-in-out",
       }}
     >

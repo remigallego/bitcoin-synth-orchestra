@@ -30,6 +30,8 @@ h3 {
 
 .chart {
   color: white;
+  z-index: 10;
+  background-color: transparent;
 }
 
 .candle {
@@ -226,7 +228,7 @@ button:focus {
       var(--grid-colour) calc(var(--grid-line) + var(--grid-blur))
     );
   transform: perspective(50vh) rotateX(60deg);
-  animation: animated-grid 0.4s infinite linear;
+  animation: animated-grid 5s infinite linear;
   --grid-colour: #8e2bff;
   --grid-line: 2rem;
   --grid-blur: 1px;

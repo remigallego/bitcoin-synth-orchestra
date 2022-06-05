@@ -11,9 +11,6 @@ let count = 0;
 
 const startLoop = () => {
   const loop = new Tone.Loop(() => {
- /*    SynthLead.play(8);
-    Bass.play(8);
-    Pad.play(8); */
     SynthLead.play(8);
     Bass.play(8);
     Pad.play(8);
