@@ -26,7 +26,7 @@ let currentPart: Tone.Part;
 let player = new Tone.Player();
 try {
   player = new Tone.Player({
-    url: "http://localhost:3000/sounds/kick.wav",
+    url: `${window.location.href}sounds/kick.wav`,
   }).toDestination(); // play as soon as the buffer is loaded
 
   Tone.loaded().then(() => {

@@ -28,7 +28,7 @@ try {
       A4: "tom3.wav",
     },
     () => {},
-    `http://localhost:3000/sounds/`
+    `${window.location.href}sounds/`
   ).toDestination();
 
   Tone.loaded().then(() => {

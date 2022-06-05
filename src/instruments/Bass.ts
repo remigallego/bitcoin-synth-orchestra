@@ -138,14 +138,14 @@ const randomizeVelocity = (velocity: number) => {
 let sampler = new Tone.Sampler();
 try {
   console.log("url = ", process.env.PUBLIC_URL);
-  const url = "http://localhost:3000";
+  const url = window.location.href;
 
   sampler = new Tone.Sampler(
     {
       A2: "bass-a2.mp3",
     },
     () => {},
-    `http://localhost:3000/`
+    url
   ).toDestination(); // play as soon as the buffer is loaded
 
   Tone.loaded().then(() => {

@@ -35,7 +35,7 @@ let currentPart: Tone.Part;
 let player = new Tone.Player();
 try {
   player = new Tone.Player({
-    url: "http://localhost:3000/sounds/snare.wav",
+    url: `${window.location.href}sounds/snare.wav`,
   }).toDestination();
 
   Tone.loaded().then(() => {
