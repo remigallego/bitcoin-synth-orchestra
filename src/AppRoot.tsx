@@ -5,12 +5,10 @@ import { Provider } from "react-redux";
 
 function AppRoot() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </header>
+    <div className="wrapper">
+      <Provider store={store}>
+        <App />
+      </Provider>
     </div>
   );
 }

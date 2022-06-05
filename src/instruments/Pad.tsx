@@ -30,11 +30,11 @@ const randomBetween = (min: number, max: number) => {
 };
 
 const generateDownNotes = () => {
-  const neutralNotes = ["A2", "C3", "E3", "G2", "C2", "A3"];
+  const notes = ["A2", "C3", "E3", "G2", "C2", "A3"];
   let chosen: string[] = [];
   return [{ time: "0:0:0" }, { time: "2:3:0" }].map((e, i, arr) => {
-    let chosenNote = neutralNotes.filter((e) => !chosen.includes(e))[
-      randomBetween(0, neutralNotes.length - 1)
+    let chosenNote = notes.filter((e) => !chosen.includes(e))[
+      randomBetween(0, notes.length - 1)
     ];
     chosen.push(chosenNote);
     return {
@@ -45,11 +45,11 @@ const generateDownNotes = () => {
 };
 
 const generateUpNotes = () => {
-  const neutralNotes = ["A2"];
+  const notes = ["A2"];
   let chosen: string[] = [];
   return [{ time: "0:0:0" }].map((e, i, arr) => {
-    let chosenNote = neutralNotes.filter((e) => !chosen.includes(e))[
-      randomBetween(0, neutralNotes.length - 1)
+    let chosenNote = notes.filter((e) => !chosen.includes(e))[
+      randomBetween(0, notes.length - 1)
     ];
     chosen.push(chosenNote);
     return {
@@ -58,20 +58,6 @@ const generateUpNotes = () => {
     };
   });
 };
-
-const neutralNotesWithTimes = [
-  { time: "0:0:0", note: "A2" },
-  { time: "2:3:0", note: "C3" },
-];
-const happyNotesWithTime = [
-  { time: "0:0", note: "A3" },
-  { time: "0:1", note: "C4" },
-  { time: "0:2", note: "E4" },
-  { time: "0:3", note: "F4" },
-  { time: "1:1", note: "G4" },
-  { time: "1:2", note: "F4" },
-  { time: "1:3", note: "E4" },
-];
 
 let currentPart: Tone.Part;
 

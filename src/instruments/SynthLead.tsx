@@ -2,7 +2,7 @@ import * as Tone from "tone";
 import { store } from "../store";
 
 export const synthLead = new Tone.PolySynth({
-  volume: -3,
+  volume: -1,
 });
 
 const reverb = new Tone.Reverb({
@@ -52,6 +52,8 @@ const generateNeutralNotes = () => {
     .map((e) => {
       const velocity = ["0:0:0", "0:1:0", "0:2:0", "0:3:0"].includes(e.time)
         ? 0.1
+        : ["0:0:2", "0:1:2", "0:2:2", "0:3:2"].includes(e.time)
+        ? randomBetween(0.8, 0.9)
         : randomBetween(0.7, 0.9);
       return {
         time: e.time,

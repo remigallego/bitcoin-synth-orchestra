@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "./components/Chart";
 import Synth from "./components/Synth";
@@ -7,9 +7,11 @@ import debug, { actions } from "./store/debug";
 
 interface Props {}
 
-const PriceAwareComponents: FunctionComponent<Props> = (props) => {
+const App: FunctionComponent<Props> = (props) => {
   const priceData = useSelector((state: RootState) => state.chartData);
-  const musicVars = useSelector((state: RootState) => state.musicVariables);
+  const direction = useSelector(
+    (state: RootState) => state.musicVariables.direction
+  );
   const dispatch = useDispatch();
 
   const latestPrice =
@@ -37,16 +39,22 @@ const PriceAwareComponents: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <h1
-        style={{
-          position: "absolute",
-          opacity: 0.5,
-          color: getColor(),
-        }}
-      >
-        {latestPrice}
-      </h1>
+      <main id="winner">
+        <div className="synthwave-grid"></div>
+        <h3
+          style={{
+            position: "absolute",
+            fontSize: 50,
+            opacity: 0.5,
+            color: getColor(),
+          }}
+        >
+          {latestPrice}
+        </h3>
+      </main>
+
       <Chart data={priceData.data} />
+
       <Synth data={priceData.data} />
       {/*    <div
           style={{
@@ -70,4 +78,4 @@ const PriceAwareComponents: FunctionComponent<Props> = (props) => {
   );
 };
 
-export default PriceAwareComponents;
+export default App;

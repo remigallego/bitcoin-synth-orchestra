@@ -23,21 +23,36 @@ export const KICKPATTERNS = {
 let kickDrum = new Tone.MembraneSynth({ volume: 8 }).toDestination();
 let currentPart: Tone.Part;
 
+let player = new Tone.Player();
+try {
+  player = new Tone.Player({
+    url: "http://localhost:3000/sounds/kick.wav",
+  }).toDestination(); // play as soon as the buffer is loaded
+
+  Tone.loaded().then(() => {
+    console.log("loaded KICK");
+  });
+  //player.autostart = true;
+
+  player.volume.value = 12;
+} catch (e) {
+  console.log("error", e);
+}
+
 const play = (measures: number) => {
   const direction = store.getState().musicVariables.direction;
   const randomNumber = randomNumberBetween(0, 5);
   let pattern = KICKPATTERNS.straight;
 
-  if (direction === -1) {
-    pattern = KICKPATTERNS.dnb;
-  } else if (direction === 1) {
+  if (direction === 1 || direction === -1) {
     pattern = KICKPATTERNS.straight;
   } else if (direction === 0) {
     pattern = KICKPATTERNS.dubstep;
   }
 
   currentPart = new Tone.Part(function (time) {
-    kickDrum.triggerAttackRelease("C1", "16n", time);
+    player.start(time);
+    //kickDrum.triggerAttackRelease("C1", "16n", time);
   }, pattern);
   currentPart.loop = measures;
   currentPart.loopEnd = "1:0";

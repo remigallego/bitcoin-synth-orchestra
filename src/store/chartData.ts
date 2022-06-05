@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from ".";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface PriceData {
   price: string;
@@ -19,7 +18,7 @@ const initialState: ChartDataState = {
   isEstablishingConnection: false,
   isConnected: false,
   data: [],
-  isPaused: false,
+  isPaused: true,
   firstPrice: null,
 };
 
@@ -39,6 +38,9 @@ const chartDataSlice = createSlice({
     },
     setFirstPrice: (state, { payload }: { payload: PriceData }) => {
       state.firstPrice = payload;
+    },
+    startChart: (state) => {
+      state.isPaused = false;
     },
   },
   extraReducers: (builder) => {},

@@ -1,6 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
+import mp3File from "./bass-a2.mp3";
 
 const BASSPATTERNS = {
   straightA: [
@@ -86,6 +87,24 @@ const BASSPATTERNS = {
     { time: "0:3:2", note: "D2", velocity: 0.9 },
     { time: "0:3:3", note: "D2", velocity: 0.7 },
   ],
+  straigthB: [
+    { time: "0:0:0", note: "B2", velocity: 0.2 },
+    { time: "0:0:1", note: "B2", velocity: 0.7 },
+    { time: "0:0:2", note: "B2", velocity: 0.9 },
+    { time: "0:0:3", note: "B2", velocity: 0.7 },
+    { time: "0:1:0", note: "B2", velocity: 0.2 },
+    { time: "0:1:1", note: "B2", velocity: 0.7 },
+    { time: "0:1:2", note: "B2", velocity: 0.9 },
+    { time: "0:1:3", note: "B2", velocity: 0.7 },
+    { time: "0:2:0", note: "B2", velocity: 0.2 },
+    { time: "0:2:1", note: "B2", velocity: 0.7 },
+    { time: "0:2:2", note: "B2", velocity: 0.9 },
+    { time: "0:2:3", note: "B2", velocity: 0.7 },
+    { time: "0:3:0", note: "B2", velocity: 0.2 },
+    { time: "0:3:1", note: "B2", velocity: 0.7 },
+    { time: "0:3:2", note: "B2", velocity: 0.9 },
+    { time: "0:3:3", note: "B2", velocity: 0.7 },
+  ],
 };
 
 let bass = new Tone.Synth({
@@ -116,11 +135,35 @@ const randomizeVelocity = (velocity: number) => {
   }
 };
 
+let sampler = new Tone.Sampler();
+try {
+  console.log("url = ", process.env.PUBLIC_URL);
+  const url = "http://localhost:3000";
+
+  sampler = new Tone.Sampler(
+    {
+      A2: "bass-a2.mp3",
+    },
+    () => {},
+    `http://localhost:3000/`
+  ).toDestination(); // play as soon as the buffer is loaded
+
+  Tone.loaded().then(() => {
+    console.log("loaded");
+  });
+  //player.autostart = true;
+
+  sampler.volume.value = 12;
+} catch (e) {
+  console.log("error", e);
+}
+
 const play = (measures: number) => {
+  const direction = store.getState().musicVariables.direction;
   const randomNumber = randomNumberBetween(0, 2);
   let patternA = BASSPATTERNS.straightA;
-  if (store.getState().musicVariables.direction === -1) {
-    patternA = BASSPATTERNS.halfA;
+  if (direction === -1) {
+    patternA = BASSPATTERNS.straigthB;
   } else if (randomNumber === 4) {
     patternA = BASSPATTERNS.halfA;
   }

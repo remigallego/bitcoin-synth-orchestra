@@ -4,7 +4,7 @@ import { actions, PriceData } from "./chartData";
 import { actions as musVarActions } from "./musicVariables";
 import * as _ from "lodash";
 
-const MAX_LENGTH = 500;
+const MAX_LENGTH = 350;
 
 const URL = "wss://stream.binance.com:9443/ws/btcusdt@aggTrade";
 const client = new WebSocket(URL);

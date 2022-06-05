@@ -14,6 +14,7 @@ const Chart: FunctionComponent<Props> = (props) => {
   const direction = useSelector(
     (state: RootState) => state.musicVariables.direction
   );
+  const isPaused = useSelector((state: RootState) => state.chartData.isPaused);
   const chartWidth = window.window.innerWidth;
   const chartHeight = window.window.innerHeight;
 
@@ -56,11 +57,12 @@ const Chart: FunctionComponent<Props> = (props) => {
       height={chartHeight}
       className="chart"
       style={{
-        backgroundColor: getBackgroundColor(),
-        transition: 'background 6s ease-in-out',
+        position: "absolute",
+        backgroundColor: "black",
+        transition: "background 6s ease-in-out",
       }}
     >
-      {dataAsFloat.map((bar, i) => {
+      {!isPaused && dataAsFloat.map((bar, i) => {
         const xPosition = (chartWidth / (dataAsFloat.length + 1)) * (i + 1);
         const previousBar = dataAsFloat[i - 1];
         let diff = 0;

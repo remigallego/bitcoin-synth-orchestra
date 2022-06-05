@@ -32,14 +32,30 @@ export const snareDrum = new Tone.NoiseSynth({
 }).chain(new Tone.Filter({ frequency: 3000 }), Tone.Destination);
 let currentPart: Tone.Part;
 
+let player = new Tone.Player();
+try {
+  player = new Tone.Player({
+    url: "http://localhost:3000/sounds/snare.wav",
+  }).toDestination();
+
+  Tone.loaded().then(() => {
+    console.log("loaded Snare");
+  });
+
+  player.volume.value = 12;
+} catch (e) {
+  console.log("error", e);
+}
+
 const play = (measures: number) => {
   let pattern = SNAREPATTERNS.straight;
   const randomNumber = randomNumberBetween(0, 3);
-  if (store.getState().musicVariables.direction !== 1 || randomNumber === 0) {
+  if (store.getState().musicVariables.direction === 0 || randomNumber === 0) {
     pattern = SNAREPATTERNS.half;
   }
   currentPart = new Tone.Part(function (time) {
-    snareDrum.triggerAttackRelease("8n", time);
+    player.start(time);
+    //  snareDrum.triggerAttackRelease("8n", time);
   }, pattern);
   currentPart.loop = measures;
   currentPart.loopEnd = "1:0";
