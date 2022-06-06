@@ -1,6 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
+import { PlayOptions } from "./Loop";
 
 export const KICKPATTERNS = {
   straight: [
@@ -39,9 +40,9 @@ try {
   console.log("error", e);
 }
 
-const play = (measures: number) => {
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
   const direction = store.getState().musicVariables.direction;
-  const randomNumber = randomNumberBetween(0, 5);
   let pattern = KICKPATTERNS.straight;
 
   if (direction === 1 || direction === -1) {
@@ -56,7 +57,7 @@ const play = (measures: number) => {
   }, pattern);
   currentPart.loop = measures;
   currentPart.loopEnd = "1:0";
-  currentPart.start();
+  currentPart.start(startTime);
 };
 
 const Kick = { play };

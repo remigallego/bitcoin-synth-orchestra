@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 import { randomNumberBetween } from "../utils/maths";
+import { PlayOptions } from "./Loop";
 
 const HATPATTERNS = {
   straight: [{ time: "0:0:0" }],
@@ -37,15 +38,16 @@ export const hatDrum = new Tone.NoiseSynth({
 );
 let currentPart: Tone.Part;
 
-const play = (measures: number) => {
-  const randomNumber = randomNumberBetween(0, 5);
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
   let pattern = HATPATTERNS.straight;
+  
   currentPart = new Tone.Part(function (time) {
     hatDrum.triggerAttackRelease("1n", time);
   }, pattern);
   currentPart.loop = measures / 8;
   currentPart.loopEnd = "8:0";
-  currentPart.start();
+  currentPart.start(startTime);
 };
 
 const Crash = { play };

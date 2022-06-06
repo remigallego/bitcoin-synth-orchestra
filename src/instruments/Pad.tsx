@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 import { store } from "../store";
+import { PlayOptions } from "./Loop";
 
 export const pad = new Tone.DuoSynth({
   voice0: {
@@ -61,7 +62,8 @@ const generateUpNotes = () => {
 
 let currentPart: Tone.Part;
 
-const play = (measures: number) => {
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
   const direction = store.getState().musicVariables.direction;
   if (direction === 1) {
     currentPart = new Tone.Part((time, note) => {
@@ -69,14 +71,14 @@ const play = (measures: number) => {
     }, generateUpNotes());
     currentPart.loop = measures / 8;
     currentPart.loopEnd = "8:0";
-    currentPart.start();
+    currentPart.start(startTime);
   } else {
     currentPart = new Tone.Part(function (time, note) {
       pad.triggerAttackRelease(note.note, "1m", time);
     }, generateDownNotes());
     currentPart.loop = measures / 4;
     currentPart.loopEnd = "4:0";
-    currentPart.start();
+    currentPart.start(startTime);
   }
 };
 

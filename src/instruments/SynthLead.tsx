@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 import { store } from "../store";
+import { PlayOptions } from "./Loop";
 
 /* Option1:
 export const synthLead = new Tone.PolySynth({
@@ -98,8 +99,11 @@ const happyNotesWithTime = [
 
 let currentPart: Tone.Part;
 
-const play = (measures: number) => {
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
+  const time4m = Tone.Time("4m").toSeconds();
   const randomNumber = randomBetween(0, 3);
+
   if (randomNumber === 3) {
     console.log("play 2 synth patterns");
     let partOne = new Tone.Part(function (time, note) {
@@ -107,20 +111,20 @@ const play = (measures: number) => {
     }, generateNeutralNotes());
     partOne.loop = measures / 2;
     partOne.loopEnd = "1:0";
-    partOne.start();
+    partOne.start(startTime);
     let partTwo = new Tone.Part(function (time, note) {
       synthLead.triggerAttackRelease(note.note, "32n", time, note.velocity);
     }, generateNeutralNotes());
     partTwo.loop = measures / 2;
     partTwo.loopEnd = "1:0";
-    partTwo.start("+4m");
+    partTwo.start(startTime + time4m);
   } else {
     currentPart = new Tone.Part(function (time, note) {
       synthLead.triggerAttackRelease(note.note, "32n", time, note.velocity);
     }, generateNeutralNotes());
     currentPart.loop = measures;
     currentPart.loopEnd = "1:0";
-    currentPart.start();
+    currentPart.start(startTime);
   }
 };
 

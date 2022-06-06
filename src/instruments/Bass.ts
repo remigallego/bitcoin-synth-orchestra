@@ -1,6 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
+import { PlayOptions } from "./Loop";
 
 const BASSPATTERNS = {
   straightA: [
@@ -137,7 +138,8 @@ const randomizeVelocity = (velocity: number) => {
   }
 };
 
-const play = (measures: number) => {
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
   const direction = store.getState().musicVariables.direction;
   const randomNumber = randomNumberBetween(0, 2);
   let patternA = BASSPATTERNS.straightA;
@@ -156,7 +158,10 @@ const play = (measures: number) => {
   }, patternA);
   partOne.loopEnd = "1:0:0";
   partOne.loop = 4;
-  partOne.start();
+  partOne.start(startTime);
+
+  const time4m = Tone.Time("4m").toSeconds();
+  const time7m = Tone.Time("7m").toSeconds();
 
   if (randomNumber === 2) {
     let nextPart = new Tone.Part(function (time, note) {
@@ -167,7 +172,7 @@ const play = (measures: number) => {
         randomizeVelocity(note.velocity)
       );
     }, BASSPATTERNS.straightF);
-    nextPart.start("+4m");
+    nextPart.start(startTime + time4m);
     nextPart.loopEnd = "1:0:0";
     nextPart.loop = 3;
     let nextPart2 = new Tone.Part(function (time, note) {
@@ -178,7 +183,7 @@ const play = (measures: number) => {
         randomizeVelocity(note.velocity)
       );
     }, BASSPATTERNS.straightG);
-    nextPart2.start("+7m");
+    nextPart2.start(startTime + time7m);
     nextPart2.loopEnd = "1:0:0";
     nextPart2.loop = 1;
   } else {
@@ -190,7 +195,7 @@ const play = (measures: number) => {
         randomizeVelocity(note.velocity)
       );
     }, BASSPATTERNS.straightF);
-    nextPart.start("+4m");
+    nextPart.start(startTime + time4m);
     nextPart.loopEnd = "1:0:0";
     nextPart.loop = 4;
   }

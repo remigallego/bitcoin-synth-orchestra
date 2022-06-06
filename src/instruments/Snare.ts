@@ -1,6 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
+import { PlayOptions } from "./Loop";
 
 export const SNAREPATTERNS = {
   straight: [{ time: "0:1:0" }, { time: "0:3:0" }],
@@ -47,9 +48,11 @@ try {
   console.log("error", e);
 }
 
-const play = (measures: number) => {
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
   let pattern = SNAREPATTERNS.straight;
   const randomNumber = randomNumberBetween(0, 3);
+
   if (store.getState().musicVariables.direction === 0 || randomNumber === 0) {
     pattern = SNAREPATTERNS.half;
   }
@@ -59,7 +62,7 @@ const play = (measures: number) => {
   }, pattern);
   currentPart.loop = measures;
   currentPart.loopEnd = "1:0";
-  currentPart.start();
+  currentPart.start(startTime);
 };
 
 const Snare = { play };

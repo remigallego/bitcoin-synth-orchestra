@@ -1,6 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
+import { PlayOptions } from "./Loop";
 
 export const TOMSPATTERNS = {
   double: [
@@ -42,9 +43,11 @@ try {
   console.log("error", e);
 }
 
-const play = (measures: number) => {
+const play = (options: PlayOptions) => {
+  const { measures, startTime } = options;
   const direction = store.getState().musicVariables.direction;
   let pattern = TOMSPATTERNS.double;
+
   if (direction === 1) {
     pattern = TOMSPATTERNS.fast;
   }
@@ -54,7 +57,7 @@ const play = (measures: number) => {
   }, pattern);
   part.loop = measures / 8;
   part.loopEnd = "8:0";
-  part.start();
+  part.start(startTime);
 };
 
 const Toms = { play };
