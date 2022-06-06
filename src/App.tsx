@@ -12,7 +12,8 @@ const App: FunctionComponent<Props> = (props) => {
   const direction = useSelector(
     (state: RootState) => state.musicVariables.direction
   );
-  const dispatch = useDispatch();
+
+  const devMode = new URL(window.location.href).searchParams.get("devMode");
 
   const latestPrice =
     priceData?.data.length > 0
@@ -39,21 +40,23 @@ const App: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <main id="winner">
-        <div className="synthwave-grid"></div>
-        <h3
-          style={{
-            position: "absolute",
-            fontSize: 50,
-            opacity: 0.5,
-            color: getColor(),
-          }}
-        >
-          {latestPrice}
-        </h3>
-      </main>
+      {!devMode && (
+        <main id="winner">
+          <div className="synthwave-grid"></div>
+          <h3
+            style={{
+              position: "absolute",
+              fontSize: 50,
+              opacity: 0.5,
+              color: getColor(),
+            }}
+          >
+            {latestPrice}
+          </h3>
+        </main>
+      )}
 
-      <Chart data={priceData.data} />
+      {!devMode && <Chart data={priceData.data} />}
 
       <Synth data={priceData.data} />
       {/*    <div
