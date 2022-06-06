@@ -9,22 +9,49 @@ export const synthLead = new Tone.PolySynth({
 }); */
 
 export let synthLead = new Tone.Synth({
-  volume: 0,
+  volume: -3,
   oscillator: {
-    type: "fmsquare11",
-    modulationType: "sawtooth",
-    modulationIndex: 0.5,
-    harmonicity: 0.5,
-    phase: 0,
+    type: "pwm",
   },
 });
 
+// @ts-ignore
+/* export let synthLead = new Tone.Sampler();
+try {
+  // @ts-ignore
+  synthLead = new Tone.Sampler(
+    {
+      A4: "A3.wav",
+      B4: "B3.wav",
+      C5: "C4.wav",
+      E5: "E4.wav",
+      G4: "G3.wav",
+      G5: "G4.wav",
+    },
+    () => {},
+    `${window.location.href}sounds/lead/`
+  ).toDestination();
+
+  synthLead.volume.value = 10;
+
+  Tone.loaded().then(() => {
+    console.log("loaded");
+  });
+} catch (error) {
+  console.log(error);
+} */
+
+const panner = new Tone.Panner(0);
 const reverb = new Tone.Reverb({
-  decay: 22,
+  decay: 32,
   wet: 0.5,
 });
-const pingPong = new Tone.FeedbackDelay("8n", 0.5).toDestination();
-export const synthLeadFilter = new Tone.Filter({ frequency: 20000 });
+const pingPong = new Tone.FeedbackDelay(0.107, 0.5).toDestination();
+export const synthLeadFilter = new Tone.Filter({ frequency: 14000 });
+const synthLeadHiPassFilter = new Tone.Filter({
+  frequency: 2000,
+  type: "highpass",
+});
 
 export const changeSynthLead = () => {
   if (synth === 2) {
@@ -35,6 +62,7 @@ export const changeSynthLead = () => {
     synth = 1;
     synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
   } else {
+    // @ts-ignore
     synthLead = new Tone.Synth({
       volume: 0,
       oscillator: {
@@ -46,12 +74,24 @@ export const changeSynthLead = () => {
       },
     });
     synth = 2;
-    synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
+    synthLead.chain(
+      pingPong,
+      reverb,
+      synthLeadFilter,
+      synthLeadHiPassFilter,
+      Tone.Destination
+    );
   }
 };
 
-pingPong.wet.value = 0.2;
-synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
+pingPong.wet.value = 0.3;
+synthLead.chain(
+  pingPong,
+  reverb,
+  synthLeadFilter,
+  synthLeadHiPassFilter,
+  Tone.Destination
+);
 
 const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -61,7 +101,7 @@ window.synth = synthLead;
 const neutralNotes = ["A3", "C4", "E4", "G4", "C4", "G4", "A3", "G3"];
 const happyNotes = ["A3", "C4", "E4", "F4", "G4"];
 const sadNotes = ["B3", "C4", "D4", "E4", "F4"];
-
+//
 const times = [
   { time: "0:0:0" },
   { time: "0:0:1" },

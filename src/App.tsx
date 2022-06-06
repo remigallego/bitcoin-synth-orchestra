@@ -1,20 +1,13 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FunctionComponent } from "react";
+import { useSelector } from "react-redux";
 import Chart from "./components/Chart";
 import Synth from "./components/Synth";
-import { changeSynthLead } from "./instruments/SynthLead";
 import { RootState } from "./store";
-import debug, { actions } from "./store/debug";
 
 interface Props {}
 
 const App: FunctionComponent<Props> = (props) => {
-  const [devMode, setDevMode] = React.useState(false);
   const priceData = useSelector((state: RootState) => state.chartData);
-  const direction = useSelector(
-    (state: RootState) => state.musicVariables.direction
-  );
-  const dispatch = useDispatch();
 
   const latestPrice =
     priceData?.data.length > 0
@@ -41,43 +34,23 @@ const App: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      {!devMode && (
-        <>
-          <main id="winner">
-            <div className="synthwave-grid"></div>
-            <h3
-              style={{
-                position: "absolute",
-                fontSize: 50,
-                opacity: 0.5,
-                color: getColor(),
-              }}
-            >
-              {latestPrice}
-            </h3>
-          </main>
+      <main id="winner">
+        <div className="synthwave-grid"></div>
+        <h3
+          style={{
+            position: "absolute",
+            fontSize: 50,
+            opacity: 0.5,
+            color: getColor(),
+          }}
+        >
+          {latestPrice}
+        </h3>
+      </main>
 
-          <Chart data={priceData.data} />
-        </>
-      )}
-
+      <Chart data={priceData.data} />
       <Synth data={priceData.data} />
-      <button
-        style={{ zIndex: 100 }}
-        onClick={() => {
-          setDevMode(!devMode);
-        }}
-      >
-        dev mode
-      </button>
-      <button
-        style={{ zIndex: 100 }}
-        onClick={() => {
-          changeSynthLead();
-        }}
-      >
-        change lead
-      </button>
+
       {/*    <div
           style={{
             position: "absolute",

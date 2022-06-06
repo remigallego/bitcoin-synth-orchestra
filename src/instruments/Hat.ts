@@ -10,38 +10,41 @@ const HATPATTERNS = {
     { time: "0:3:2" },
   ],
   fast: [
+    { time: "0:0:0", velocity: 0.8 },
     { time: "0:0:1", velocity: 0.9 },
     { time: "0:0:2", velocity: 1 },
     { time: "0:0:3", velocity: 0.9 },
+    { time: "0:1:0", velocity: 0.8 },
     { time: "0:1:1", velocity: 0.9 },
     { time: "0:1:2", velocity: 1 },
     { time: "0:1:3", velocity: 0.9 },
+    { time: "0:2:0", velocity: 0.8 },
     { time: "0:2:1", velocity: 0.9 },
     { time: "0:2:2", velocity: 1 },
     { time: "0:2:3", velocity: 0.9 },
+    { time: "0:3:0", velocity: 0.8 },
     { time: "0:3:1", velocity: 0.9 },
     { time: "0:3:2", velocity: 1 },
     { time: "0:3:3", velocity: 0.9 },
   ],
 };
 
-export const hatDrum = new Tone.NoiseSynth({
-  volume: 3,
-  noise: {
-    type: "pink",
-    playbackRate: 3,
-  },
-  envelope: {
-    attack: 0.02,
-    decay: 0.2,
-    sustain: 0.02,
-    release: 0,
-  },
-}).chain(
-  new Tone.Filter({ frequency: 10000, type: "highpass" }),
-  Tone.Destination
-);
 let currentPart: Tone.Part;
+
+export let hatDrum = new Tone.Player();
+try {
+  hatDrum = new Tone.Player({
+    url: `${window.location.href}sounds/hat.wav`,
+  }).toDestination();
+
+  Tone.loaded().then(() => {
+    console.log("loaded HAT");
+  });
+
+  hatDrum.volume.value = 8;
+} catch (e) {
+  console.log("error", e);
+}
 
 const play = (options: PlayOptions) => {
   const { measures, startTime } = options;
@@ -51,8 +54,8 @@ const play = (options: PlayOptions) => {
   if (randomNumber === 3) {
     pattern = HATPATTERNS.fast;
   }
-  currentPart = new Tone.Part(function (time) {
-    hatDrum.triggerAttackRelease("16n", time);
+  currentPart = new Tone.Part((time) => {
+    hatDrum.start(time);
   }, pattern);
   currentPart.loop = measures;
   currentPart.loopEnd = "1:0";
