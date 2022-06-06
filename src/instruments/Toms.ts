@@ -1,11 +1,13 @@
 import * as Tone from "tone";
+import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
 
 export const TOMSPATTERNS = {
   double: [
     { time: "7:2:2", note: "A2", velocity: 0.9 },
     { time: "7:2:3", note: "A3", velocity: 0.7 },
-    { time: "7:3:2", note: "A3", velocity: 0.9 },
+    { time: "7:3:1", note: "A3", velocity: 0.7 },
+    { time: "7:3:2", note: "A4", velocity: 0.9 },
     { time: "7:3:3", note: "A4", velocity: 0.7 },
   ],
   fast: [
@@ -41,12 +43,14 @@ try {
 }
 
 const play = (measures: number) => {
-  const randomN = randomNumberBetween(0, 8);
-  if (randomN < 5) return;
-  let pattern = randomN === 5 ? TOMSPATTERNS.fast : TOMSPATTERNS.double;
+  const direction = store.getState().musicVariables.direction;
+  let pattern = TOMSPATTERNS.double;
+  if (direction === 1) {
+    pattern = TOMSPATTERNS.fast;
+  }
 
   let part = new Tone.Part(function (time, note) {
-    sampler.triggerAttackRelease(note.note, time);
+    sampler.triggerAttackRelease(note.note, "16n", time);
   }, pattern);
   part.loop = measures / 8;
   part.loopEnd = "8:0";

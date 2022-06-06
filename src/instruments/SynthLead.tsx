@@ -1,8 +1,15 @@
 import * as Tone from "tone";
 import { store } from "../store";
 
-export const synthLead = new Tone.PolySynth({
-  volume: -1,
+export const synthLead = new Tone.Synth({
+  volume: 0,
+  oscillator: {
+    type: "fmsquare11",
+    modulationType: "sawtooth",
+    modulationIndex: 0.5,
+    harmonicity: 0.5,
+    phase: 0,
+  },
 });
 
 const reverb = new Tone.Reverb({
@@ -10,8 +17,10 @@ const reverb = new Tone.Reverb({
   wet: 0.5,
 });
 const pingPong = new Tone.FeedbackDelay("8n", 0.5).toDestination();
+export const synthLeadFilter = new Tone.Filter({ frequency: 20000 });
+
 pingPong.wet.value = 0.2;
-synthLead.chain(pingPong, reverb, Tone.Destination);
+synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
 
 const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;

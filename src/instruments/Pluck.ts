@@ -78,7 +78,7 @@ const play = (measures: number) => {
 const playRandomNote = () => {
   const randomNote =
     neutralNotesWithTimes[randomBetween(0, neutralNotesWithTimes.length - 1)];
-  pluck.triggerAttackRelease(randomNote.note, "32n");
+  pluck.triggerAttackRelease(randomNote.note, "32n", Tone.Transport.now());
 };
 
 const Pluck = { play, playRandomNote };

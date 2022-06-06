@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 import Bass from "./Bass";
+import Crash from "./Crash";
 import Hat from "./Hat";
 import Kick from "./Kick";
 import Pad from "./Pad";
@@ -18,6 +19,7 @@ const startLoop = () => {
     Hat.play(8);
     Snare.play(8);
     Toms.play(8);
+    Crash.play(8)
     count += 1;
   }, "8m");
 

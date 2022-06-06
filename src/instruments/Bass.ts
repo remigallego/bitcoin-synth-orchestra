@@ -1,7 +1,6 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
-import mp3File from "./bass-a2.mp3";
 
 const BASSPATTERNS = {
   straightA: [
@@ -109,10 +108,13 @@ const BASSPATTERNS = {
 
 let bass = new Tone.Synth({
   oscillator: {
-    type: "amsawtooth8",
-    volume: 8,
+    type: "amsawtooth16",
+    volume: 10,
   },
 });
+
+// @ts-ignore
+//window.bass = bass;
 
 export const bassFilter = new Tone.Filter({ frequency: 2000 });
 const chorus = new Tone.Chorus(1, 2.5, 0.4).toDestination().start();
@@ -135,35 +137,12 @@ const randomizeVelocity = (velocity: number) => {
   }
 };
 
-let sampler = new Tone.Sampler();
-try {
-  console.log("url = ", process.env.PUBLIC_URL);
-  const url = window.location.href;
-
-  sampler = new Tone.Sampler(
-    {
-      A2: "bass-a2.mp3",
-    },
-    () => {},
-    url
-  ).toDestination(); // play as soon as the buffer is loaded
-
-  Tone.loaded().then(() => {
-    console.log("loaded");
-  });
-  //player.autostart = true;
-
-  sampler.volume.value = 12;
-} catch (e) {
-  console.log("error", e);
-}
-
 const play = (measures: number) => {
   const direction = store.getState().musicVariables.direction;
   const randomNumber = randomNumberBetween(0, 2);
   let patternA = BASSPATTERNS.straightA;
   if (direction === -1) {
-    patternA = BASSPATTERNS.straigthB;
+    patternA = BASSPATTERNS.straightA;
   } else if (randomNumber === 4) {
     patternA = BASSPATTERNS.halfA;
   }

@@ -5,7 +5,7 @@ import { bassFilter } from "../../instruments/Bass";
 import { pad } from "../../instruments/Pad";
 import Pluck, { pluck } from "../../instruments/Pluck";
 import { snareDrum } from "../../instruments/Snare";
-import { synthLead } from "../../instruments/SynthLead";
+import { synthLead, synthLeadFilter } from "../../instruments/SynthLead";
 import { actions } from "../chartData";
 import { actions as musVarActions } from "../musicVariables";
 import { hatDrum } from "../../instruments/Hat";
@@ -52,10 +52,11 @@ const synthMiddleware: Middleware<{}, RootState> =
 
       synthLead.set({ detune: direction * 1200 });
       pad.set({ volume: direction !== 0 ? -10 : -100 });
-      synthLead.set({ volume: direction === -1 ? -999 : 0 });
+     // synthLead.set({ volume: direction === -1 ? -999 : 0 });
       hatDrum.set({ volume: direction === -1 ? -999 : 0 });
       snareDrum.set({ volume: direction === -1 ? -999 : 10 });
       bassFilter.set({ frequency: direction === -1 ? 200 : 3000 });
+      synthLeadFilter.set({ frequency: direction === -1 ? 4000 : 20000 });
 
       if (direction === -1) {
         pluck.set({ volume: 0 });
@@ -65,9 +66,9 @@ const synthMiddleware: Middleware<{}, RootState> =
     try {
       // For some reason the Pluck instrument keeps
       // throwing exceptions, it still works though
-      if (Tone.Transport.state === "started") {
-        Pluck.playRandomNote();
-      }
+      /*  if (Tone.Transport.state === "started") {
+        //  Pluck.playRandomNote();
+      } */
     } catch (e) {
       console.log("error", e);
     }
