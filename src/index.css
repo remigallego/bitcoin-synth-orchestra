@@ -32,6 +32,7 @@ h3 {
   color: white;
   z-index: 10;
   background-color: transparent;
+  -webkit-filter: url(#chromaticabberration);
 }
 
 .candle {
@@ -128,6 +129,7 @@ button {
   margin-right: 2rem;
   text-transform: uppercase;
   font-weight: 500;
+  -webkit-filter: url(#chromaticabberration);
 }
 button:hover {
   color: #242424;

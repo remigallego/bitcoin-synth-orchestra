@@ -20,6 +20,12 @@ export const TOMSPATTERNS = {
     { time: "7:3:2", note: "A4", velocity: 0.9 },
     { time: "7:3:3", note: "A4", velocity: 0.7 },
   ],
+  staccato: [
+    { time: "7:1:1", note: "A2", velocity: 0.7 },
+    { time: "7:2:2", note: "A3", velocity: 0.9 },
+    { time: "7:3:2", note: "A4", velocity: 0.9 },
+    { time: "7:3:3", note: "A4", velocity: 0.9 },
+  ],
 };
 
 let sampler = new Tone.Sampler();
@@ -50,6 +56,9 @@ const play = (options: PlayOptions) => {
 
   if (direction === 1) {
     pattern = TOMSPATTERNS.fast;
+  }
+  if (direction === -1) {
+    pattern = TOMSPATTERNS.staccato;
   }
 
   let part = new Tone.Part(function (time, note) {

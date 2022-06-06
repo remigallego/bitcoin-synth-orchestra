@@ -30,7 +30,7 @@ export const changeSynthLead = () => {
   if (synth === 2) {
     // @ts-ignore
     synthLead = new Tone.PolySynth({
-      volume: 3,
+      volume: 6,
     });
     synth = 1;
     synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
