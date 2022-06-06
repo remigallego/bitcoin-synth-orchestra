@@ -25,14 +25,14 @@ const HATPATTERNS = {
 };
 
 export const hatDrum = new Tone.NoiseSynth({
-  volume: 2,
+  volume: 3,
   noise: {
     type: "pink",
     playbackRate: 3,
   },
   envelope: {
     attack: 0.02,
-    decay: 0.02,
+    decay: 0.1,
     sustain: 0.02,
     release: 0,
   },
@@ -43,9 +43,9 @@ export const hatDrum = new Tone.NoiseSynth({
 let currentPart: Tone.Part;
 
 const play = (measures: number) => {
-  const randomNumber = randomNumberBetween(0, 5);
+  const randomNumber = randomNumberBetween(0, 3);
   let pattern = HATPATTERNS.straight;
-  if (randomNumber === 5) {
+  if (randomNumber === 3) {
     pattern = HATPATTERNS.fast;
   }
   currentPart = new Tone.Part(function (time) {

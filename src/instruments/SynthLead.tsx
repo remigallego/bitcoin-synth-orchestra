@@ -1,6 +1,11 @@
 import * as Tone from "tone";
 import { store } from "../store";
 
+/* Option1:
+export const synthLead = new Tone.PolySynth({
+  volume: 1,
+}); */
+
 export const synthLead = new Tone.Synth({
   volume: 0,
   oscillator: {

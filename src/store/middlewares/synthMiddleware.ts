@@ -53,7 +53,7 @@ const synthMiddleware: Middleware<{}, RootState> =
       synthLead.set({ detune: direction * 1200 });
       pad.set({ volume: direction !== 0 ? -10 : -100 });
      // synthLead.set({ volume: direction === -1 ? -999 : 0 });
-      hatDrum.set({ volume: direction === -1 ? -999 : 0 });
+      hatDrum.set({ volume: direction === -1 ? -999 : 3 });
       snareDrum.set({ volume: direction === -1 ? -999 : 10 });
       bassFilter.set({ frequency: direction === -1 ? 200 : 3000 });
       synthLeadFilter.set({ frequency: direction === -1 ? 4000 : 20000 });
