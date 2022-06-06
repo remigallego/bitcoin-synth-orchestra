@@ -19,6 +19,16 @@ export const KICKPATTERNS = {
   ],
   dnb: [{ time: "0:0:0" }, { time: "0:2:2" }],
   dubstep: [{ time: "0:0:0" }, { time: "0:1:2" }],
+  metal: [
+    { time: "0:0:0" },
+    { time: "0:1:0" },
+    { time: "0:2:0" },
+    { time: "0:2:1" },
+    { time: "0:2:2" },
+    { time: "0:2:3" },
+    { time: "0:3:0" },
+    { time: "0:3:2" },
+  ],
 };
 
 let kickDrum = new Tone.MembraneSynth({ volume: 8 }).toDestination();
@@ -44,9 +54,13 @@ const play = (options: PlayOptions) => {
   const { measures, startTime } = options;
   const direction = store.getState().musicVariables.direction;
   let pattern = KICKPATTERNS.straight;
+  const randomNumber = randomNumberBetween(0, 5);
 
   if (direction === 1 || direction === -1) {
     pattern = KICKPATTERNS.straight;
+    if (randomNumber === 1) {
+      pattern = KICKPATTERNS.metal;
+    }
   } else if (direction === 0) {
     pattern = KICKPATTERNS.dubstep;
   }

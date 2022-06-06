@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import Chart from "./components/Chart";
-import Synth from "./components/Synth";
+import StartButton from "./components/StartButton";
 import { RootState } from "./store";
+import * as Tone from "tone";
+import { loop } from "./instruments/Loop";
 
 interface Props {}
 
@@ -44,12 +46,15 @@ const App: FunctionComponent<Props> = (props) => {
             color: getColor(),
           }}
         >
-          {latestPrice}
+          {loop?.progress > 0 && latestPrice}
         </h3>
       </main>
-
-      <Chart data={priceData.data} />
-      <Synth data={priceData.data} />
+      {loop?.progress > 0 && (
+        <>
+          <Chart data={priceData.data} />
+        </>
+      )}
+      <StartButton data={priceData.data} />
 
       {/*    <div
           style={{

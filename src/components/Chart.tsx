@@ -14,7 +14,6 @@ const Chart: FunctionComponent<Props> = (props) => {
   const direction = useSelector(
     (state: RootState) => state.musicVariables.direction
   );
-  const isPaused = useSelector((state: RootState) => state.chartData.isPaused);
   const chartWidth = window.window.innerWidth;
   const chartHeight = window.window.innerHeight;
 
@@ -61,7 +60,7 @@ const Chart: FunctionComponent<Props> = (props) => {
         transition: "background 6s ease-in-out",
       }}
     >
-      {!isPaused && dataAsFloat.map((bar, i) => {
+      {dataAsFloat.map((bar, i) => {
         const xPosition = (chartWidth / (dataAsFloat.length + 1)) * (i + 1);
         const previousBar = dataAsFloat[i - 1];
         let diff = 0;

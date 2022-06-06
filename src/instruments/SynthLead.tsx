@@ -1,4 +1,5 @@
 import * as Tone from "tone";
+import { RecursivePartial } from "tone/build/esm/core/util/Interface";
 import { PlayOptions } from "./Loop";
 
 let synth = 2;
@@ -8,12 +9,14 @@ export const synthLead = new Tone.PolySynth({
   volume: 1,
 }); */
 
-export let synthLead = new Tone.Synth({
+const synthOptions: RecursivePartial<Tone.SynthOptions> = {
   volume: -3,
   oscillator: {
     type: "pwm",
   },
-});
+};
+
+export let synthLead = new Tone.Synth(synthOptions);
 
 // @ts-ignore
 /* export let synthLead = new Tone.Sampler();
@@ -146,9 +149,29 @@ const generateNeutralNotes = () => {
 let currentPart: Tone.Part;
 
 const play = (options: PlayOptions) => {
-  const { measures, startTime } = options;
+  const { measures, startTime, count } = options;
   const time4m = Tone.Time("4m").toSeconds();
   const randomNumber = randomBetween(0, 3);
+  const randomNumber2 = randomBetween(0, 1);
+
+  /* Tone.Transport.scheduleOnce(() => {
+    if (randomNumber2 === 0 && count !== undefined && count > 2) {
+      synthLead.set({
+        ...synthOptions,
+        volume: 10,
+        oscillator: {
+          type: "amsawtooth11",
+        },
+      });
+    } else {
+      synthLead.set({
+        ...synthOptions,
+        oscillator: {
+          type: "pwm",
+        },
+      });
+    }
+  }, startTime); */
 
   if (randomNumber === 3) {
     console.log("play 2 synth patterns");

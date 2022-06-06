@@ -35,16 +35,20 @@ export let hatDrum = new Tone.Player();
 try {
   hatDrum = new Tone.Player({
     url: `${window.location.href}sounds/hat.wav`,
-  }).toDestination();
+  });
 
   Tone.loaded().then(() => {
     console.log("loaded HAT");
   });
 
-  hatDrum.volume.value = 8;
+  hatDrum.volume.value = 9;
 } catch (e) {
   console.log("error", e);
 }
+
+const panner = new Tone.Panner(0.5);
+
+hatDrum.chain(panner, Tone.Destination);
 
 const play = (options: PlayOptions) => {
   const { measures, startTime } = options;

@@ -52,7 +52,7 @@ const synthMiddleware: Middleware<{}, RootState> =
 
       synthLead.set({ detune: direction * 1200 });
       pad.set({ volume: direction !== 0 ? -10 : -100 });
-     // synthLead.set({ volume: direction === -1 ? -999 : 0 });
+      synthLead.set({ volume: direction === -1 ? -10 : -3 });
       hatDrum.set({ volume: direction === -1 ? -999 : 3 });
       snareDrum.set({ volume: direction === -1 ? -999 : 10 });
       bassFilter.set({ frequency: direction === -1 ? 200 : 3000 });
@@ -66,9 +66,9 @@ const synthMiddleware: Middleware<{}, RootState> =
     try {
       // For some reason the Pluck instrument keeps
       // throwing exceptions, it still works though
-      /*  if (Tone.Transport.state === "started") {
-        //  Pluck.playRandomNote();
-      } */
+      if (Tone.Transport.state === "started" && direction === -1) {
+        Pluck.playRandomNote();
+      }
     } catch (e) {
       console.log("error", e);
     }
