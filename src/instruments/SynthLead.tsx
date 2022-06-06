@@ -1,13 +1,14 @@
 import * as Tone from "tone";
-import { store } from "../store";
 import { PlayOptions } from "./Loop";
+
+let synth = 2;
 
 /* Option1:
 export const synthLead = new Tone.PolySynth({
   volume: 1,
 }); */
 
-export const synthLead = new Tone.Synth({
+export let synthLead = new Tone.Synth({
   volume: 0,
   oscillator: {
     type: "fmsquare11",
@@ -24,6 +25,30 @@ const reverb = new Tone.Reverb({
 });
 const pingPong = new Tone.FeedbackDelay("8n", 0.5).toDestination();
 export const synthLeadFilter = new Tone.Filter({ frequency: 20000 });
+
+export const changeSynthLead = () => {
+  if (synth === 2) {
+    // @ts-ignore
+    synthLead = new Tone.PolySynth({
+      volume: 3,
+    });
+    synth = 1;
+    synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
+  } else {
+    synthLead = new Tone.Synth({
+      volume: 0,
+      oscillator: {
+        type: "fmsquare11",
+        modulationType: "sawtooth",
+        modulationIndex: 0.5,
+        harmonicity: 0.5,
+        phase: 0,
+      },
+    });
+    synth = 2;
+    synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
+  }
+};
 
 pingPong.wet.value = 0.2;
 synthLead.chain(pingPong, reverb, synthLeadFilter, Tone.Destination);
@@ -77,25 +102,6 @@ const generateNeutralNotes = () => {
       };
     });
 };
-
-const neutralNotesWithTimes = [
-  { time: "0:0", note: "A3" },
-  { time: "0:1", note: "C4" },
-  { time: "0:2", note: "E4" },
-  { time: "0:3", note: "G4" },
-  { time: "1:1", note: "C4" },
-  { time: "1:2", note: "G4" },
-  { time: "1:3", note: "C4" },
-];
-const happyNotesWithTime = [
-  { time: "0:0", note: "A3" },
-  { time: "0:1", note: "C4" },
-  { time: "0:2", note: "E4" },
-  { time: "0:3", note: "F4" },
-  { time: "1:1", note: "G4" },
-  { time: "1:2", note: "F4" },
-  { time: "1:3", note: "E4" },
-];
 
 let currentPart: Tone.Part;
 

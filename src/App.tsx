@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Chart from "./components/Chart";
 import Synth from "./components/Synth";
+import { changeSynthLead } from "./instruments/SynthLead";
 import { RootState } from "./store";
 import debug, { actions } from "./store/debug";
 
@@ -68,6 +69,14 @@ const App: FunctionComponent<Props> = (props) => {
         }}
       >
         dev mode
+      </button>
+      <button
+        style={{ zIndex: 100 }}
+        onClick={() => {
+          changeSynthLead();
+        }}
+      >
+        change lead
       </button>
       {/*    <div
           style={{
