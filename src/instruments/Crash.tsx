@@ -1,6 +1,6 @@
 import * as Tone from "tone";
 import { randomNumberBetween } from "../utils/maths";
-import { PlayOptions } from "./Loop";
+import { PlayOptions } from "./SongLoop";
 
 const HATPATTERNS = {
   straight: [{ time: "0:0:0" }],

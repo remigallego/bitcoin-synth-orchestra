@@ -1,6 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
-import { PlayOptions } from "./Loop";
+import { randomNumberBetween } from "../utils/maths";
+import { PlayOptions } from "./SongLoop";
 
 export const pad = new Tone.DuoSynth({
   voice0: {
@@ -26,16 +27,12 @@ const pingPong = new Tone.FeedbackDelay("4n", 0.5).toDestination();
 pingPong.wet.value = 0.5;
 pad.chain(pingPong, reverb, Tone.Destination);
 
-const randomBetween = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
 const generateDownNotes = () => {
   const notes = ["A2", "C3", "E3", "G2", "C2", "A3"];
   let chosen: string[] = [];
   return [{ time: "0:0:0" }, { time: "2:3:0" }].map((e, i, arr) => {
     let chosenNote = notes.filter((e) => !chosen.includes(e))[
-      randomBetween(0, notes.length - 1)
+      randomNumberBetween(0, notes.length - 1)
     ];
     chosen.push(chosenNote);
     return {
@@ -48,9 +45,9 @@ const generateDownNotes = () => {
 const generateUpNotes = () => {
   const notes = ["A2"];
   let chosen: string[] = [];
-  return [{ time: "0:0:0" }].map((e, i, arr) => {
+  return [{ time: "0:0:0" }].map((e) => {
     let chosenNote = notes.filter((e) => !chosen.includes(e))[
-      randomBetween(0, notes.length - 1)
+      randomNumberBetween(0, notes.length - 1)
     ];
     chosen.push(chosenNote);
     return {

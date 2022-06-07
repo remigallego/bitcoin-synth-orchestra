@@ -1,7 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
-import { PlayOptions } from "./Loop";
+import { PlayOptions } from "./SongLoop";
 
 export const CLAPPATTERNS = {
   straight: [{ time: "1:3:1" }, { time: "1:3:2" }, { time: "1:4:2" }],

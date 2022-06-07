@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react";
 import * as Tone from "tone";
 
-import Loop, { loop } from "../instruments/Loop";
+import { loop } from "../instruments/SongLoop";
 import { actions } from "../store/chartData";
 import { useDispatch } from "react-redux";
+import SongLoop from "../instruments/SongLoop";
 
 export const DEFAULT_BPM = 140;
 
@@ -41,7 +42,7 @@ const StartButton: FunctionComponent<{}> = (props) => {
               Tone.Transport.bpm.value = DEFAULT_BPM;
 
               Tone.Transport.start();
-              Loop.startLoop();
+              SongLoop.startLoop();
             }
           }}
         >

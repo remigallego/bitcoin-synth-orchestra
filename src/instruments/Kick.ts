@@ -1,7 +1,7 @@
 import * as Tone from "tone";
 import { store } from "../store";
 import { randomNumberBetween } from "../utils/maths";
-import { PlayOptions } from "./Loop";
+import { PlayOptions } from "./SongLoop";
 
 export const KICKPATTERNS = {
   straight: [

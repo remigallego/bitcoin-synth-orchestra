@@ -1,11 +1,11 @@
 import * as Tone from "tone";
+import { Loop } from "tone";
 import Bass from "./Bass";
 import Chords from "./Chords";
 import Clap from "./Clap";
 import Crash from "./Crash";
 import Hat from "./Hat";
 import Kick from "./Kick";
-import Pad from "./Pad";
 import Snare from "./Snare";
 import SynthLead from "./SynthLead";
 import Toms from "./Toms";
@@ -17,8 +17,8 @@ export interface PlayOptions {
   startTime: number;
   count?: number;
 }
-//@ts-ignore
-export let loop;
+
+export let loop: Loop;
 
 const startLoop = () => {
   loop = new Tone.Loop(() => {
@@ -55,6 +55,6 @@ const startLoop = () => {
   loop.start(startTime);
 };
 
-const Loop = { startLoop };
+const SongLoop = { startLoop };
 
-export default Loop;
+export default SongLoop;

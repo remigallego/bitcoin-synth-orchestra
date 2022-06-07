@@ -1,6 +1,6 @@
 import * as Tone from "tone";
 import { RecursivePartial } from "tone/build/esm/core/util/Interface";
-import { PlayOptions } from "./Loop";
+import { PlayOptions } from "./SongLoop";
 
 let synth = 2;
 

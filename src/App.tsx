@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Chart from "./components/Chart";
 import StartButton from "./components/StartButton";
 import { RootState } from "./store";
-import { loop } from "./instruments/Loop";
+import { loop } from "./instruments/SongLoop";
 
 interface Props {}
 
