@@ -2,7 +2,6 @@ import { Middleware } from "redux";
 import { RootState } from ".";
 import { actions, PriceData } from "./chartData";
 import { actions as musVarActions } from "./musicVariables";
-import * as _ from "lodash";
 
 const MAX_LENGTH = 350;
 
