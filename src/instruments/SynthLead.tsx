@@ -99,8 +99,7 @@ synthLead.chain(
 const randomBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-// @ts-ignore
-window.synth = synthLead;
+
 const neutralNotes = ["A3", "C4", "E4", "G4", "C4", "G4", "A3", "G3"];
 const happyNotes = ["A3", "C4", "E4", "F4", "G4"];
 const sadNotes = ["B3", "C4", "D4", "E4", "F4"];
@@ -149,29 +148,9 @@ const generateNeutralNotes = () => {
 let currentPart: Tone.Part;
 
 const play = (options: PlayOptions) => {
-  const { measures, startTime, count } = options;
+  const { measures, startTime } = options;
   const time4m = Tone.Time("4m").toSeconds();
   const randomNumber = randomBetween(0, 3);
-  const randomNumber2 = randomBetween(0, 1);
-
-  /* Tone.Transport.scheduleOnce(() => {
-    if (randomNumber2 === 0 && count !== undefined && count > 2) {
-      synthLead.set({
-        ...synthOptions,
-        volume: 10,
-        oscillator: {
-          type: "amsawtooth11",
-        },
-      });
-    } else {
-      synthLead.set({
-        ...synthOptions,
-        oscillator: {
-          type: "pwm",
-        },
-      });
-    }
-  }, startTime); */
 
   if (randomNumber === 3) {
     console.log("play 2 synth patterns");

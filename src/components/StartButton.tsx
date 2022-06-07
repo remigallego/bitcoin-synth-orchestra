@@ -1,16 +1,13 @@
-import React, { FunctionComponent } from "react";
-import { PriceData } from "../context/PriceDataContext";
+import { FunctionComponent } from "react";
 import * as Tone from "tone";
 
 import Loop, { loop } from "../instruments/Loop";
 import { actions } from "../store/chartData";
 import { useDispatch } from "react-redux";
-interface Props {
-  data: PriceData["data"];
-}
+
 export const DEFAULT_BPM = 140;
 
-const StartButton: FunctionComponent<Props> = (props) => {
+const StartButton: FunctionComponent<{}> = (props) => {
   const dispatch = useDispatch();
 
   const getText = () => {
@@ -36,7 +33,6 @@ const StartButton: FunctionComponent<Props> = (props) => {
       {!hideButton && (
         <button
           disabled={Tone.Transport.state === "started"}
-          style={{}}
           onClick={() => {
             if (Tone.Transport.state === "stopped") {
               Tone.start();

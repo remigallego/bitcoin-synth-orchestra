@@ -1,9 +1,8 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { useSelector } from "react-redux";
 import Chart from "./components/Chart";
 import StartButton from "./components/StartButton";
 import { RootState } from "./store";
-import * as Tone from "tone";
 import { loop } from "./instruments/Loop";
 
 interface Props {}
@@ -54,26 +53,7 @@ const App: FunctionComponent<Props> = (props) => {
           <Chart data={priceData.data} />
         </>
       )}
-      <StartButton data={priceData.data} />
-
-      {/*    <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            backgroundColor: "white",
-          }}
-        >
-          <p style={{ fontSize: 15, color: "black", margin: 0 }}>
-            Direction: {musicVars.direction.toString()}
-          </p>
-          <button onClick={() => dispatch(actions.setPriceOffsetUp())}>
-            Make price go UP
-          </button>{" "}
-          <button onClick={() => dispatch(actions.setPriceOffsetDown())}>
-            Make price go DOWN
-          </button>
-        </div> */}
+      <StartButton />
     </>
   );
 };
