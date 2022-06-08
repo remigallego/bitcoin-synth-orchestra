@@ -83,7 +83,7 @@ const App: FunctionComponent<Props> = (props) => {
       )}
       <StartButton />
       <a
-        href="https://www.github.com/"
+        href="https://www.github.com/remigallego"
         target="_blank"
         rel="noopener noreferrer"
       >
