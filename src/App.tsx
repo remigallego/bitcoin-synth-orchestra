@@ -83,7 +83,7 @@ const App: FunctionComponent<Props> = (props) => {
       )}
       <StartButton />
       <a
-        href="https://www.github.com/remigallego"
+        href="https://github.com/remigallego/bitcoin-synth-orchestra"
         target="_blank"
         rel="noopener noreferrer"
       >
