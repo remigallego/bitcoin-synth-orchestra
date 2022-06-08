@@ -319,6 +319,7 @@ button:focus {
 .github-logo {
   height: 250px;
   width: 200px;
-  opacity: 0.5;
+  z-index: 20;
+  opacity: 1;
   transition: 0.2s;
 }
