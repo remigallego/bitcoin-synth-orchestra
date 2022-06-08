@@ -195,10 +195,13 @@ button {
   text-transform: uppercase;
   font-weight: 500;
   -webkit-filter: url(#chromaticabberration);
+  transition: 0.2s;
+  cursor: pointer;
 }
 button:hover {
   color: #242424;
   background-color: #00ffff;
+  transform: translateY(-0.2rem);
 }
 button:active {
   outline: none;
@@ -307,4 +310,15 @@ button:focus {
   50% {
     opacity: 0;
   }
+}
+
+.github-logo:hover {
+  transform: scale(1.1);
+}
+
+.github-logo {
+  height: 250px;
+  width: 200px;
+  opacity: 0.5;
+  transition: 0.2s;
 }

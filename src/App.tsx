@@ -82,6 +82,24 @@ const App: FunctionComponent<Props> = (props) => {
         </>
       )}
       <StartButton />
+      <a
+        href="https://www.github.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="./github.png"
+          alt="github logo"
+          className="github-logo"
+          style={{
+            height: 50,
+            width: 50,
+            position: "absolute",
+            bottom: 35,
+            right: 35,
+          }}
+        />
+      </a>
     </>
   );
 };
