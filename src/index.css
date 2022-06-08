@@ -1,6 +1,37 @@
+@font-face {
+  font-family: RoadRage;
+  src: url("../fonts/Road_Rage.otf") format("truetype");
+}
+
+@font-face {
+  font-family: Commando;
+  src: url("../fonts/commando.ttf") format("truetype");
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#video-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#video {
+  position: absolute;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  opacity: 0.83;
 }
 
 .App {
@@ -9,12 +40,45 @@ code {
 }
 
 h3 {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: Commando;
 }
 
 .sidebar {
   background-color: #171742;
+}
+
+.chrome80s {
+  background-image: -webkit-linear-gradient(
+    #8e51ff 25%,
+    #6f46c9 45%,
+    #07078a 60%,
+    #a509ed 69%,
+    #e65555 80%,
+    #ffffff 90%,
+    #3305ec 95%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 0.05rem;
+  -webkit-text-stroke-color: rgba(0, 0, 0, 0.2);
+  width: 110%;
+}
+.chrome80s:before {
+  content: attr(data-text);
+  filter: url(#bevel);
+  background: -webkit-linear-gradient(#55acff 30%, #0060bb 60%, #55acff 80%) 0%
+    0% repeat;
+  -webkit-background-clip: text;
+  position: absolute;
+  z-index: -1;
+  width: 110%;
+}
+.chrome80s:after {
+  content: attr(data-text);
+  position: absolute;
+  text-shadow: 0 0 15px #fff;
+  transform: translate(-100%);
+  z-index: -2;
 }
 
 .content {
@@ -98,11 +162,12 @@ main {
   z-index: 1;
 }
 h1 {
-  font-family: chuck, sans-serif;
-  color: #00ffff;
+  font-family: RoadRage;
+  color: #88ff00;
   letter-spacing: 0.1em;
   text-align: center;
-  font-size: 4em;
+  font-size: 2vw;
+  animation: blink 0.22s linear infinite;
 }
 h2 {
   font-family: montserrat, sans-serif;
@@ -240,7 +305,6 @@ button:focus {
 }
 @keyframes blink {
   50% {
-    text-shadow: 0 0 1px #00ffff, 0 -3px 3px rgba(255, 255, 255, 0.205),
-      0 3px 3px rgba(0, 0, 0, 0.5), 0 0 15px #00ffff, 0 0 25px #00ffffcc;
+    opacity: 0;
   }
 }

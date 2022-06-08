@@ -67,7 +67,7 @@ const synthMiddleware: Middleware<{}, RootState> =
       // For some reason the Pluck instrument keeps
       // throwing exceptions, it still works though
       if (Tone.Transport.state === "started" && direction === -1) {
-        Pluck.playRandomNote();
+        //   Pluck.playRandomNote();
       }
     } catch (e) {
       console.log("error", e);

@@ -9,6 +9,9 @@ interface Props {}
 
 const App: FunctionComponent<Props> = (props) => {
   const priceData = useSelector((state: RootState) => state.chartData);
+  const direction = useSelector(
+    (state: RootState) => state.musicVariables.direction
+  );
 
   const latestPrice =
     priceData?.data.length > 0
@@ -35,19 +38,44 @@ const App: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <main id="winner">
-        <div className="synthwave-grid"></div>
-        <h3
-          style={{
-            position: "absolute",
-            fontSize: 50,
-            opacity: 0.5,
-            color: getColor(),
-          }}
-        >
-          {loop?.progress > 0 && latestPrice}
-        </h3>
-      </main>
+      <div id="video-wrap">
+        <video id="video" loop autoPlay>
+          <source src="/videos/bg.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
+      </div>
+      {loop?.progress > 0 && (
+        <main id="winner">
+          <h3
+            style={{
+              position: "absolute",
+              fontSize: 70,
+              color: getColor(),
+            }}
+          >
+            <div
+              className="chrome80s centered"
+              data-text={loop?.progress > 0 && latestPrice}
+            >
+              {loop?.progress > 0 && latestPrice}
+            </div>
+            {/* 
+            // WIP: Adds a blinking "Pump" or "Dump" text depending on the direction
+            {direction === 1 && (
+              <h1
+                style={{
+                  position: "absolute",
+                  top: 30,
+                  fontSize: "3vw",
+                }}
+              >
+                Pump!
+              </h1>
+            )} */}
+          </h3>
+        </main>
+      )}
+
       {loop?.progress > 0 && (
         <>
           <Chart data={priceData.data} />
